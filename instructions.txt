@@ -1,0 +1,182 @@
+Tim's Interstellar Music Player (TIM.P for short) was designed and coded entirely by me (NAME REDACTED) at home.
+Detailed instructions, features and limitations can be found at the top of my code, however you don't have to read them to use the program as instructions are given in the console. Because pygame covers the screen on the pi when it boots to the console I had to launch the desktop to see the console and input into the pygame window at the same time.
+
+In my zip file there is a "TIMP data" folder and an empty "Music" folder along with TIMP.py. If you place these in /home/pi and place at least one mp3 file in the Music folder the program will work immediately. See 1 below to configure the file paths.
+
+The Important stuff is here:
+1) Please make sure that RESOURCES_PATH leads to the folder called "TIMP data" and SONG_PATH leads to a folder with some mp3 files in it. Otherwise the program will not run. These variables can be found under Adjustable variables section (about line 270).
+
+2) I have coded it in python 2.7 and I have only tested it on the newer Raspberry Pi 2 model B.
+
+3) Because there are over 1900 lines I would recommend opening the program in Visual Studio because you can collapse blocks which makes it easier to navigate the file.
+
+4) Also if there is a copyright issue with the Red Dwarf theme tune I set as the alarm, it can be changed to another song. It is called Alarm.ogg in the "TIMP data" folder
+
+5) The program is completely single threaded apart from one bit. The message() function accepts a string and creates a whole new process. This process repeatedly calls sense.show_message(string). The main program stores the Pid of this process and can kill it at any point to interrupt the message. I had to do this because I wanted to be able to interrupt the scrolling message instead of waiting for it to complete. I have tested this thoroughly and it works seamlessly. When looking through my code please remember that message() does not block execution.
+
+6) Controls: Navigating the GUI is done completely with the joystick.
+Up: Play / pause
+Down: Stop
+Left: Rewind (restarts the song)
+Right: Skip
+A: Volume
+B: Main menu / Visualisations.
+
+To Skip back: stop and then rewind.
+
+Features:
+> Easy to use song picker
+> Play / Pause / Skip / Replay / Stop buttons
+> Main menu and Volume buttons
+> Volume control
+> Engaging GUI with transitions
+> Shuffle setting
+> Visualisations! (like screensavers)
+> Stats view (this is one of the visualisations) with temperature, pressure and humidity.
+> Alarm clock
+> Date and time
+> Timer
+> Daily messages
+> Quit button
+
+-------
+
+Tim's Interstellar Music Player (TIM.P)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Before you run please make sure that:
+>The variable RESOURCES_PATH corresponds to the folder which holds the resources (This should be a folder called "TIMP data").
+>The variable SONG_PATH corresponds to a folder with some MP3 files in it.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Note:
+TIMP was entirely developed by me (NAME REDACTED) hidden away typing at my computer.
+Over many afternoons (and some of the Easter holidays) I developed this program with the hope that Tim Peake will be able to use on the ISS!
+You do not have to read the instructions to use the program as prompts are given through the console. The instructions just explain it in detail.
+Because there are over 1900 lines I would recommend opening the program in Visual Studio because you can collapse blocks which makes it easier to navigate the file. 
+Also if there is a copyright issue with the Red Dwarf theme tune I set as the alarm, it can be changed to another song. It is called Alarm.ogg in the "TIMP data" folder
+Finally, when looking through the code please remember that my message() function does not block execution, but uses a separate process to display the scrolling message so it can be cancelled.
+
+Features:
+> Easy to use song picker
+> Play / Pause / Skip / Replay / Stop buttons
+> Main menu and Volume buttons
+> Volume control
+> Engaging GUI with transitions
+> Shuffle setting
+> Visualisations! (like screensavers)
+> Stats view (this is one of the visualisations) with temperature, pressure and humidity.
+> Alarm clock
+> Date and time
+> Timer
+> Daily messages
+> Quit button
+
+The following is a detailed guide on how to use the program, it's not as complicated as it looks when you use it :)
+
+CONTROLS:
+The Joystick is used to navigate the GUI.
+The top button is play/pause
+The right button is skip
+The left button is replay / rewind
+The bottom button is stop
+The lower left button activates a volume control on the screen
+The lower right button brings the user back to the main menu. If user is already on the main menu it cycles through different 'visualisations' (I will explain this later)
+
+To rewind, press the stop button and then the replay/rewind button
+
+The buttons work at any point in the program so you can play or pause whenever you want
+
+NAVIGATION:
+>>>>Main menu
+By default the program loads the Main menu which is a note icon with a border. Moving the joystick in any direction opens the settings (see Settings below)
+IMPORTANT: If no buttons are pressed for the amount of seconds specified by TIMEOUT then the program will return to the main menu or visualisation.
+
+>Visualisations
+The Visualisations are like screensavers. The visualisations either show info about the song or display patterns on the screen.
+To cycle through the visualisations press the Main Menu / visualisations button. Note: the button's primary function is to bring the user back to the main menu first.
+
+If the program times out then it goes back to playing whatever visualisation was playing. 
+To wake up TIMP, move the joystick in any direction.
+visualisations are disabled when no song is playing.
+
+The Visualisations:
+
+>Song -shows the name of the song that is playing.
+>Snakes -random pattern with two 'snakes' spiralling into the middle.
+>Bars -random pattern that looks like an equaliser.
+>Circles -randomly spawns different circles on the screen (I had to use trigonometry and Pythagoras for this)
+>Stats -Displays a message showing the temperature, pressure and humidity.
+
+>>>>Settings
+The user can scroll through the settings using the joystick left/right. 
+Down or Enter (middle button) selects that setting. 
+Up goes back to the Main menu.
+
+The settings:
+
+>Pick Song (note icon):
+Opens up a GUI that lets the user select a song (see the Pick Song section)
+
+>Volume (speaker with soundwaves icon):
+Displays a GUI to let the user change the volume (see the Volume section)
+
+>Shuffle (infinity icon):
+Either displays a red 'N' or green 'Y' depending on the current setting.
+The user can toggle the setting by pressing left or fight on the joystick.
+The middle button chooses the currently displaying letter.
+
+>Date (Clock icon):
+Shows the date and then the time
+
+>Timer (321 icon):
+Lets the user set a timer. It works like this with the user pressing enter after each one:
+1) displays "Minutes Set"
+2) The user uses up/down to change the minutes. The screen shows the number.
+3) displays "Seconds Set"
+4) The user uses up/down to change the seconds. The screen shows the number.
+5) displays "Set: 3M 30S" replacing 3 and 30 with the correct values
+6) shows a screen which slowly fills in untill the timer is up.
+7) Alarm goes off
+
+>Alarm (Bell icon):
+Lets the user set an alarm. It works just like the timer but with these steps insted:
+1) displays "On/Off"
+2) The user uses left/right to toggle between Y/N
+3) If the user selected N then it displays "Alarm Off" and goes back to the settings
+4) Otherwise it displays "Hours Set"
+5) The user uses up/down to change the hours. The screen shows the number.
+6) displays "Minutes Set"
+7) The user uses up/down to change the minutes. The screen shows the number.
+8) displays the set time for the alarm and then goes back to settings
+
+When the time is reached an alarm is set off, this is detected by the Update() function
+
+>Message(? icon):
+Displays a daily message, these messages are stored in Messages.txt in the TIMP data folder
+
+>Info (i icon):
+Displays a small message
+
+>Quit (X icon):
+Ends the program
+
+>>>>Pick Song
+This is opened by selecting Pick song from the settings.
+Pick song displays a GUI that allows the user to pick a song to play:
+
+    > When it loads the letter 'A' is displayed. Using the joystick up/down the user can scroll through the alphabet. 
+    > If the middle key or right is pressed on the joystick then the function will display the name of the song with the matching first letter. 
+    > Then using up/down the user can scroll through the songs in alphabetical order.
+    > If left is pressed then it will go back to the alphabet.
+    > If left is pressed on the alphabet the program returns to the main menu. 
+    > When the user finds the song that he/she wants to play they can press right or the middle key to play that song. It will show a play icon and return to the main menu
+    > Songs beginning with a non-alphabetic character are under '*' which is above A in the scroll.
+
+>>>>Volume
+This is opened by either selecting Volume from the settings or pressing the volume button.
+It displays a bar on the screen. left / right on the joystick increases or decreases the length of the bar which represents the volume.
+If the bar fills up the whole screen then it is at max volume.
+Pressing up or pressing the volume button will close the volume control.
+
+That's it!
